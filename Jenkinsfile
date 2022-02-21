@@ -20,7 +20,7 @@ pipeline{
         stage('Dev Deploy'){
             steps {
                 sh "chmod +x changeTag.sh"
-                sh "./ ChangeTag.sh ${dockerTag}"
+                sh "./ChangeTag.sh ${dockerTag}"
                 sshagent(['afdad1af-5999-4b9d-a40e-c467dc1152d9']) {
                      script{
 					    sh returnStatus: true, script: "ssh ubuntu@${devIp} docker rm -f nodeapp"
