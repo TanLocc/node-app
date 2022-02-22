@@ -23,11 +23,11 @@ pipeline{
                 sh "./changeTag.sh ${dockerTag}"
                sshagent(['loclpt-keypair-virginia']) {
                      script{
-					    sh "ssh -o StrictHostKeyChecking=no ubuntu@${devIp} docker rm -f nodeapp"
+					    sh "ssh -o StrictHostKeyChecking=no ubuntu@${devIp} docker rm -f node-app"
                         withCredentials([string(credentialsId: 'docker-hub', variable: 'dockerHubPwd')]) {
                             sh "ssh ubuntu@${devIp} docker login -u 0352730247 -p ${dockerHubPwd}"
                         }
-						def runCmd = "docker run -d -p 8080:8080 --name=nodeapp 0352730247/nodeapp:${dockerTag}"
+						def runCmd = "docker run -d -p 8080:8080 --name=nodeapp 0352730247/node-app:${dockerTag}"
 						sh "ssh -o StrictHostKeyChecking=no ubuntu@${devIp} ${runCmd}"
 					
                         // sh 'ssh -o StrictHostKeyChecking=no tanloc@192.168.1.6 rm -rf /home/tanloc/jenkins'
