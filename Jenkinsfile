@@ -2,7 +2,7 @@ pipeline{
     agent any
     environment{
         dockerTag = getLatestCommitId()
-        devIp = '172.31.86.231'
+        devIp = '3.84.50.84'
     }
     stages {
         stage('Docker - Build & Push'){
@@ -23,7 +23,7 @@ pipeline{
                 sh "./changeTag.sh ${dockerTag}"
                sshagent(['loclpt-keypair-virginia']) {
                      script{
-					    sh 'ssh -o StrictHostKeyChecking=no ubuntu@172.31.86.231 docker rm -f nodeapp'
+					    sh 'ssh -o StrictHostKeyChecking=no ubuntu@3.84.50.84 docker rm -f nodeapp'
 						def runCmd = "docker run -d -p 8080:8080 --name=nodeapp 0352730247/nodeapp:${dockerTag}"
 						sh "ssh -o StrictHostKeyChecking=no ubuntu@${devIp} ${runCmd}"
 					
