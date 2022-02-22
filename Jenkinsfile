@@ -27,9 +27,9 @@ pipeline{
 						def runCmd = "docker run -d -p 8080:8080 --name=nodeapp 0352730247/nodeapp:${dockerTag}"
 						sh "ssh -o StrictHostKeyChecking=no ubuntu@${devIp} ${runCmd}"
 					
-                        sh 'ssh -o StrictHostKeyChecking=no tanloc@192.168.1.6 rm -rf /home/tanloc/jenkins'
-                        sh 'ssh -o StrictHostKeyChecking=no tanloc@192.168.1.6 mkdir /home/tanloc/jenkins'
-                        sh 'scp -o StrictHostKeyChecking=no index.html tanloc@192.168.1.6:/home/tanloc/jenkins'
+                        // sh 'ssh -o StrictHostKeyChecking=no tanloc@192.168.1.6 rm -rf /home/tanloc/jenkins'
+                        // sh 'ssh -o StrictHostKeyChecking=no tanloc@192.168.1.6 mkdir /home/tanloc/jenkins'
+                        // sh 'scp -o StrictHostKeyChecking=no index.html tanloc@192.168.1.6:/home/tanloc/jenkins'
                     }
                     // sh "scp -o StrictHostKeyChecking=no services.yml node-app-pod.yml ubuntu@${devIp}:/home/ubuntu/"
                     // script{
