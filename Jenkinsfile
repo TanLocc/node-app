@@ -1,6 +1,9 @@
 
 def dockerTag = "${getLatestCommitId().toString()}"
-
+def getLatestCommitId(){
+	def commitId = sh returnStdout: true, script: 'git rev-parse HEAD'
+	return commitId
+}
 podTemplate {
     
     node(POD_LABEL) {
@@ -16,7 +19,3 @@ podTemplate {
     }
 }
 
-def getLatestCommitId(){
-	def commitId = sh returnStdout: true, script: 'git rev-parse HEAD'
-	return commitId
-}
