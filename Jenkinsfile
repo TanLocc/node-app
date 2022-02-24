@@ -1,5 +1,5 @@
 
-def dockerTag = "abc"
+def dockerTag = "${getLatestCommitId().toString()}"
 
 podTemplate {
     
