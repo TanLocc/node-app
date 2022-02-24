@@ -1,6 +1,5 @@
 
 podTemplate {
-    def dockerTag = getLatestCommitId()
     node(POD_LABEL) {
         stage('Run shell') {
             sh "docker build . -t 0352730247/node-app:${dockerTag} "
