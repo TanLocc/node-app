@@ -1,5 +1,8 @@
 
+def dockerTag = "abc"
+
 podTemplate {
+    
     node(POD_LABEL) {
         stage('Run shell') {
             sh "docker build . -t 0352730247/node-app:${dockerTag} "
