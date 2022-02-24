@@ -1,9 +1,6 @@
 
-def dockerTag = "${getLatestCommitId().toString()}"
-def getLatestCommitId(){
-	def commitId = sh returnStdout: true, script: 'git rev-parse HEAD'
-	return commitId
-}
+def dockerTag = "abc"
+
 podTemplate (containers: [
     containerTemplate(
         name: 'jnlp', 
@@ -24,5 +21,10 @@ podTemplate (containers: [
             }
         }
     }
+}
+
+def getLatestCommitId(){
+	def commitId = sh returnStdout: true, script: 'git rev-parse HEAD'
+	return commitId
 }
 
