@@ -1,16 +1,28 @@
 
 def dockerTag = "abc"
 
-podTemplate (containers: [
-    containerTemplate(
-        name: 'jnlp', 
-        image: 'jenkins/inbound-agent:latest'
-        )
-  ]){
+podTemplate (yaml: """
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: docker
+    image: docker:1.11
+    command: ['cat']
+    tty: true
+    volumeMounts:
+    - name: dockersock
+      mountPath: /var/run/docker.sock
+  volumes:
+  - name: dockersock
+    hostPath:
+      path: /var/run/docker.sock
+"""
+  ){
     
     node(POD_LABEL) {
         stage('Run shell') {
-            container('jnlp') {
+            container('docker') {
                             sh "docker build . -t 0352730247/node-app:${dockerTag} "
                 
             withCredentials([string(credentialsId: 'docker-hub', variable: 'dockerHubPwd')]) {
