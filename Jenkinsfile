@@ -1,10 +1,10 @@
+environment{
+    dockerTag = getLatestCommitId()
+    devIp = '3.84.50.84'
+}
 podTemplate {
     
     node(POD_LABEL) {
-        environment{
-            dockerTag = getLatestCommitId()
-            devIp = '3.84.50.84'
-        }
         stage('Run shell') {
             sh "docker build . -t 0352730247/node-app:${dockerTag} "
                 
