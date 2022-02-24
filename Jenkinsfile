@@ -1,11 +1,15 @@
 
-def dockerTag = getLatestCommitId()
-
 podTemplate {
-    
+    def dockerTag = getLatestCommitId()
     node(POD_LABEL) {
         stage('Run shell') {
-            sh "docker build . -t 0352730247/node-app:$dockerTag "
+            sh "docker build . -t 0352730247/node-app:${dockerTag} "
+                
+            withCredentials([string(credentialsId: 'docker-hub', variable: 'dockerHubPwd')]) {
+                sh "docker login -u 0352730247 -p ${dockerHubPwd}"
+            }
+                
+            sh "docker push 0352730247/node-app:${dockerTag}"
         }
     }
 }
