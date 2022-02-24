@@ -1,7 +1,6 @@
-environment{
-    dockerTag = getLatestCommitId()
-    devIp = '3.84.50.84'
-}
+
+def dockerTag = getLatestCommitId()
+
 podTemplate {
     
     node(POD_LABEL) {
