@@ -22,7 +22,10 @@ spec:
     
     node(POD_LABEL) {
         stage('Run shell') {
+            sh "pwd"
+            sh "ls" 
             container('docker') {
+            sh "pwd"
             sh "ls"    
             sh "docker build -t 0352730247/node-app:${dockerTag} ."
                 
