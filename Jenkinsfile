@@ -23,6 +23,7 @@ spec:
     node(POD_LABEL) {
         stage ("begin"){
           sh "pwd"
+          sh "ls"
         }
         stage('Run shell') {
             sh "pwd"
