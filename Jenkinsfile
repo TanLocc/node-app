@@ -21,6 +21,9 @@ spec:
   ){
     
     node(POD_LABEL) {
+        stage ("begin"){
+          sh "pwd"
+        }
         stage('Run shell') {
             sh "pwd"
             sh "ls" 
