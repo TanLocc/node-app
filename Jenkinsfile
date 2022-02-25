@@ -34,11 +34,6 @@ spec:
   ){
     
     node(POD_LABEL) {
-        stage ("begin"){
-          sh "pwd"
-          sh "ls"
-          sh 'cp /var/jenkins_home/workspace/app-node /home/jenkins/agent/workspace/app-node'
-        }
         stage('Run shell') {
             sh "pwd"
             sh "ls" 
