@@ -20,16 +20,16 @@ kind: Pod
 spec:
   containers:
   - name: docker
-    image: docker:latest
+    image: docker:1.11
     command: ['cat']
     tty: true
     volumeMounts:
     - name: dockersock
-      mountPath: /var/run/docker.sock   
+      mountPath: /var/run/docker.sock
   volumes:
   - name: dockersock
     hostPath:
-      path: /var/jenkins_home
+      path: /var/run/docker.sock
 """
   ){
     
