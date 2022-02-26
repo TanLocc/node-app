@@ -10,7 +10,7 @@ WORKDIR /usr/src/app
 # where available (npm@5+)
 COPY package.json ./
 
-RUN npm config set registry https://registry.npmjs.org/
+RUN npm config delete proxy
 RUN npm install
 # If you are building your code for production
 # RUN npm install --only=production
