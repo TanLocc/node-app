@@ -1,50 +1,48 @@
-
-// pipeline {
-//    agent any
-//    stages {
-//       stage('deploy') {
-//          steps {
-//             echo 'Deploying....'
-//             sh "pwd"
-//             sh "ls"
-//          }
-//       }
-//    }
-// }
-
-def dockerTag = "abc"
-
-podTemplate (yaml: """
-apiVersion: v1
-kind: Pod
-spec:
-  containers:
-  - name: docker
-    image: docker:latest
-    command: ['cat']
-    tty: true
-    volumeMounts:
-    - name: dockersock
-      mountPath: /var/run/docker.sock
-  volumes:
-  - name: dockersock
-    hostPath:
-      path: /var/run/docker.sock
-"""
-  ){
-    
-    node(POD_LABEL) {
-        stage('Run shell') {
-            sh "pwd"
-            sh "ls" 
-            git 'https://github.com/TanLocc/node-app.git'
-            container('docker') {
-              sh "docker build -t 0352730247/node-app:${dockerTag} ."
-              // withCredentials([string(credentialsId: 'docker-hub', variable: 'dockerHubPwd')]) {
-              //     sh "docker login -u 0352730247 -p ${dockerHubPwd}"
-              // }
-                  
-              // sh "docker push 0352730247/node-app:${dockerTag}"
+pipeline{
+    agent any
+    environment{
+        dockerTag = getLatestCommitId()
+        devIp = '3.84.50.84'
+    }
+    stages {
+        stage('Docker - Build & Push'){
+            steps{
+                sh "docker build . -t 0352730247/node-app:${dockerTag} "
+                
+                withCredentials([string(credentialsId: 'docker-hub', variable: 'dockerHubPwd')]) {
+                    sh "docker login -u 0352730247 -p ${dockerHubPwd}"
+                }
+                
+                sh "docker push 0352730247/node-app:${dockerTag}"
+            }
+        }
+        
+        stage('Dev Deploy'){
+            steps {
+                sh "chmod +x changeTag.sh"
+                sh "./changeTag.sh ${dockerTag}"
+               sshagent(['loclpt-keypair-virginia']) {
+                     script{
+					    sh "ssh -o StrictHostKeyChecking=no ubuntu@${devIp} docker rm -f node-app"
+                        withCredentials([string(credentialsId: 'docker-hub', variable: 'dockerHubPwd')]) {
+                            sh "ssh ubuntu@${devIp} docker login -u 0352730247 -p ${dockerHubPwd}"
+                        }
+						def runCmd = "docker run -d -p 8080:8080 --name=nodeapp 0352730247/node-app:${dockerTag}"
+						sh "ssh -o StrictHostKeyChecking=no ubuntu@${devIp} ${runCmd}"
+					
+                        // sh 'ssh -o StrictHostKeyChecking=no tanloc@192.168.1.6 rm -rf /home/tanloc/jenkins'
+                        // sh 'ssh -o StrictHostKeyChecking=no tanloc@192.168.1.6 mkdir /home/tanloc/jenkins'
+                        // sh 'scp -o StrictHostKeyChecking=no index.html tanloc@192.168.1.6:/home/tanloc/jenkins'
+                    }
+                    // sh "scp -o StrictHostKeyChecking=no services.yml node-app-pod.yml ubuntu@${devIp}:/home/ubuntu/"
+                    // script{
+                    //     try {
+                    //         sh "ssh ubuntu@${devIp} kubectl apply -f ."
+                    //     } catch {
+                    //         sh "ssh ubuntu@${devIp} kubectl create -f ."
+                    //     }
+                    // }
+                }
             }
         }
     }
@@ -54,4 +52,3 @@ def getLatestCommitId(){
 	def commitId = sh returnStdout: true, script: 'git rev-parse HEAD'
 	return commitId
 }
-
