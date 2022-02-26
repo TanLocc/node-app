@@ -11,7 +11,7 @@ WORKDIR /usr/src/app
 COPY package.json ./
 
 RUN npm config delete proxy
-RUN npm install
+RUN npm install --legacy-peer-deps
 # If you are building your code for production
 # RUN npm install --only=production
 
