@@ -13,6 +13,7 @@
 // }
 
 def dockerTag = "abc"
+def ls = sh returnStdout: true, script: 'ls'
 
 podTemplate (yaml: """
 apiVersion: v1
@@ -36,6 +37,7 @@ spec:
     
     node(POD_LABEL) {
         stage('Run shell') {
+            echo "${ls}"
             sh "pwd"
             sh "ls" 
             container('docker') {
