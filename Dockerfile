@@ -9,6 +9,8 @@ WORKDIR /usr/src/app
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
 # where available (npm@5+)
 COPY package.json ./
+RUN npm config rm proxy
+RUN npm config rm https-proxy
 RUN npm config set registry http://registry.npmjs.org
 RUN echo 104.16.93.83 www.npmjs.com registry.npmjs.org >> /etc/hosts
 RUN npm install 
