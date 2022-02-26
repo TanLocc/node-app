@@ -9,9 +9,10 @@ WORKDIR /usr/src/app
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
 # where available (npm@5+)
 COPY package.json ./
-
+RUN rm package-lock.json
 RUN npm config delete proxy
-RUN npm install --legacy-peer-deps
+RUN npm config set strict-ssl false
+RUN npm install 
 # If you are building your code for production
 # RUN npm install --only=production
 
