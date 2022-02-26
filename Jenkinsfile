@@ -13,7 +13,7 @@
 // }
 
 def dockerTag = "abc"
-def ls = sh returnStdout: true, script: 'ls'
+def ls = "${sh returnStdout: true, script: 'ls'}"
 
 podTemplate (yaml: """
 apiVersion: v1
