@@ -21,6 +21,7 @@ spec:
   containers:
   - name: docker
     image: docker:latest
+    workingDir: /var/jenkins_home
     command: ['cat']
     tty: true
     volumeMounts:
