@@ -39,7 +39,6 @@ spec:
             sh "ls" 
             git 'https://github.com/TanLocc/node-app.git'
             container('docker') {
-              sh "service docker restart"
               sh "docker build -t 0352730247/node-app:${dockerTag} ."
               // withCredentials([string(credentialsId: 'docker-hub', variable: 'dockerHubPwd')]) {
               //     sh "docker login -u 0352730247 -p ${dockerHubPwd}"
