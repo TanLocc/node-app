@@ -26,10 +26,13 @@ spec:
     volumeMounts:
     - name: dockersock
       mountPath: /var/run/docker.sock
+  - env:
+    - name: "JENKINS_AGENT_WORKDIR"
+      value: "/var/jenkins_home"    
   volumes:
   - name: dockersock
     hostPath:
-      path: /var/jenkins_home/workspace
+      path: /var/run/docker.sock
 """
   ){
     
