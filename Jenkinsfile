@@ -13,7 +13,6 @@
 // }
 
 def dockerTag = "abc"
-def ls = "${sh returnStdout: true, script: 'ls'}"
 
 podTemplate (yaml: """
 apiVersion: v1
@@ -31,13 +30,12 @@ spec:
   volumes:
   - name: dockersock
     hostPath:
-      path: /var/run/docker.sock
+      path: /var/jenkins_home
 """
   ){
     
     node(POD_LABEL) {
         stage('Run shell') {
-            echo "${ls}"
             sh "pwd"
             sh "ls" 
             container('docker') {
