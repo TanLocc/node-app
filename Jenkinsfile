@@ -39,7 +39,7 @@ spec:
             sh "ls" 
             git 'https://github.com/TanLocc/node-app.git'
             container('docker') {
-              sh "docker build --add-host=registry.npmjs.org:104.16.93.83 -t 0352730247/node-app:${dockerTag} ."
+              sh "docker build --add-host=registry.npmjs.org:104.16.27.35 -t 0352730247/node-app:${dockerTag} ."
               // withCredentials([string(credentialsId: 'docker-hub', variable: 'dockerHubPwd')]) {
               //     sh "docker login -u 0352730247 -p ${dockerHubPwd}"
               // }
