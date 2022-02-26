@@ -25,10 +25,7 @@ spec:
     tty: true
     volumeMounts:
     - name: dockersock
-      mountPath: /var/run/docker.sock
-  - env:
-    - name: "JENKINS_AGENT_WORKDIR"
-      value: "/var/jenkins_home"    
+      mountPath: /var/run/docker.sock   
   volumes:
   - name: dockersock
     hostPath:
