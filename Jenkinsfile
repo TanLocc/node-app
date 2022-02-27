@@ -69,6 +69,7 @@ spec:
             sh "ls" 
             
             container('docker') {
+              sh "ping registry.npmjs.org"
               git 'https://github.com/TanLocc/node-app.git' 
               sh "docker build -t 0352730247/node-app:${dockerTag} ."
               // withCredentials([string(credentialsId: 'docker-hub', variable: 'dockerHubPwd')]) {
