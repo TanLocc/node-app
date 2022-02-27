@@ -56,6 +56,7 @@ spec:
     volumeMounts:
     - name: dockersock
       mountPath: /var/run/docker.sock
+  nodeName: ip-10-0-102-97.us-east-2.compute.internal
   volumes:
   - name: dockersock
     hostPath:
