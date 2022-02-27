@@ -1,39 +1,88 @@
-podTemplate(containers: [
-    containerTemplate(
-        name: 'maven', 
-        image: 'maven:3.8.1-jdk-8', 
-        command: 'sleep', 
-        args: '30d'
-        ),
-    containerTemplate(
-        name: 'python', 
-        image: 'python:latest', 
-        command: 'sleep', 
-        args: '30d')
-  ]) {
+// pipeline {
+//   agent {
+//     kubernetes {
+//       label 'jenkins'
+//       defaultContainer 'jnlp'
+//       yaml """
+// apiVersion: v1
+// kind: Pod
+// metadata:
+// labels:
+//   component: ci
+// spec:
+//   # Use service account that can deploy to all namespaces
+//   serviceAccountName: jenkins-admin
+//   containers:
+//   - name: docker
+//     image: docker:latest
+//     command:
+//     - cat
+//     tty: true
+//     volumeMounts:
+//     - mountPath: /var/run/docker.sock
+//       name: docker-sock
+//   volumes:
+//     - name: docker-sock
+//       hostPath:
+//         path: /var/run/docker.sock
+// """
+// }
+//    }
+//   stages {
 
+//     stage('Push') {
+//       steps {
+//         git 'https://github.com/TanLocc/node-app.git'
+//         container('docker') {
+         
+//           sh "docker build -t 0352730247/node-app:abc ."
+//         }
+//       }
+//     }
+//   }
+// }
+
+def dockerTag = "abc"
+
+podTemplate (yaml: """
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: docker
+    image: docker:latest
+    command: ['cat']
+    tty: true
+    volumeMounts:
+    - name: dockersock
+      mountPath: /var/run/docker.sock
+  volumes:
+  - name: dockersock
+    hostPath:
+      path: /var/run/docker.sock
+"""
+  ){
+    
     node(POD_LABEL) {
-        stage('Get a Maven project') {
-            git 'https://github.com/spring-projects/spring-petclinic.git'
-            container('maven') {
-                stage('Build a Maven project') {
-                    sh '''
-                    echo "maven build"
-                    '''
-                }
+        stage('Run shell') {
+            sh "pwd"
+            sh "ls" 
+            
+            container('docker') {
+              git 'https://github.com/TanLocc/node-app.git' 
+              sh "docker build -t 0352730247/node-app:${dockerTag} -c docker ."
+              // withCredentials([string(credentialsId: 'docker-hub', variable: 'dockerHubPwd')]) {
+              //     sh "docker login -u 0352730247 -p ${dockerHubPwd}"
+              // }
+                  
+              // sh "docker push 0352730247/node-app:${dockerTag}"
             }
         }
-
-        stage('Get a Python Project') {
-            git url: 'https://github.com/hashicorp/terraform.git', branch: 'main'
-            container('python') {
-                stage('Build a Go project') {
-                    sh '''
-                    echo "Go Build"
-                    '''
-                }
-            }
-        }
-
     }
 }
+
+// def getLatestCommitId(){
+// 	def commitId = sh returnStdout: true, script: 'git rev-parse HEAD'
+// 	return commitId
+// }
+
