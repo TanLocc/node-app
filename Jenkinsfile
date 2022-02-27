@@ -1,7 +1,7 @@
 pipeline {
   agent {
     kubernetes {
-      label 'POD_LABEL'
+      label 'jenkins'
       defaultContainer 'jnlp'
       yaml """
 apiVersion: v1
@@ -32,9 +32,10 @@ spec:
 
     stage('Push') {
       steps {
+        git 'https://github.com/TanLocc/node-app.git'
         container('docker') {
-          git 'https://github.com/TanLocc/node-app.git'
-          sh 'sh "docker build -t 0352730247/node-app:abc .'
+         
+          sh "docker build -t 0352730247/node-app:abc ."
         }
       }
     }
