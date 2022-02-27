@@ -34,7 +34,7 @@ spec:
       steps {
         container('docker') {
           sh """
-             sh "docker build -t 0352730247/node-app:${dockerTag} ."
+             sh "docker build -t 0352730247/node-app:abc ."
           """
         }
       }
