@@ -33,9 +33,8 @@ spec:
     stage('Push') {
       steps {
         container('docker') {
-          sh """
-             sh "docker build -t 0352730247/node-app:abc ."
-          """
+          git 'https://github.com/TanLocc/node-app.git'
+          sh 'sh "docker build -t 0352730247/node-app:abc .'
         }
       }
     }
