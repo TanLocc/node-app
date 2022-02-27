@@ -44,25 +44,12 @@
 
 def dockerTag = "abc"
 
-podTemplate (yaml: """
-apiVersion: v1
-kind: Pod
-spec:
-  containers:
-  - name: docker
-    image: docker:latest
-    command: ['cat']
-    tty: true
-    volumeMounts:
-    - name: dockersock
-      mountPath: /var/run/docker.sock
-  nodeName: ip-10-0-102-97.us-east-2.compute.internal
-  volumes:
-  - name: dockersock
-    hostPath:
-      path: /var/run/docker.sock
-"""
-  ){
+podTemplate(containers: [
+    containerTemplate(
+        name: 'docker', 
+        image: 'docker:latest'
+        )
+  ]){
     
     node(POD_LABEL) {
         stage('Run shell') {
