@@ -72,7 +72,7 @@ spec:
               git 'https://github.com/TanLocc/node-app.git' 
               sh "docker build --network=host -t 0352730247/node-app:${dockerTag} ."
               kubeconfig(serverUrl: 'https://2A0C42504940399165EA7BE05C44BE72.gr7.us-east-2.eks.amazonaws.com') {
-                kubectl get node
+                sh "kubectl get node"
               }     
               // withCredentials([string(credentialsId: 'docker-hub', variable: 'dockerHubPwd')]) {
               //     sh "docker login -u 0352730247 -p ${dockerHubPwd}"
