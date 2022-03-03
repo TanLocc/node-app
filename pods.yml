@@ -10,4 +10,4 @@ spec:
     - name: nodeapp
       image: kammana/nodeapp:v1
       ports:
-        - containerPort: 8081
+        - containerPort: 8080
