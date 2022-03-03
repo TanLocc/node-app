@@ -8,7 +8,7 @@ metadata:
 spec:
   containers:
   - name: nodeapp
-    image: kammana/nodeapp:v1
+    image: 0352730247/node-app:latest
     resources:
       limits:
         memory: "128Mi"
