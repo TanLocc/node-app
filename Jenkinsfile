@@ -39,7 +39,7 @@ spec:
         // git 'https://github.com/TanLocc/node-app.git'
         container('docker') {
          
-          sh "docker build -t 0352730247/node-app:${dockerTag} ."
+          sh "docker build . -t 0352730247/node-app:${dockerTag}"
         }
       }
     }
