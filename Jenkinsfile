@@ -55,9 +55,9 @@ spec:
                     sh "ssh ubuntu@${devIp} cd /home/ubuntu/app-node/"
                     script{
                         try {
-                            sh "ssh ubuntu@${devIp}: kubectl apply -f app-node/"
+                            sh "ssh ubuntu@${devIp} kubectl apply -f app-node/"
                         } catch(error) {
-                            sh "ssh ubuntu@${devIp}: kubectl create -f app-node/"
+                            sh "ssh ubuntu@${devIp} kubectl create -f app-node/"
                         }
                     }
                 }
