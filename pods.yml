@@ -7,6 +7,6 @@ metadata:
 spec:
   containers:
     - name: nodeapp
-      image: 0352730247/node-app:v1
+      image: kammana/node-app:v1
       ports:
         - containerPort: 8080
