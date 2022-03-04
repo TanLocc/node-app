@@ -51,7 +51,7 @@ spec:
                sshagent(['server-keypair']) {
                     sh "ssh -o StrictHostKeyChecking=no ubuntu@${devIp} mkdir app-node"
                     sh "scp -o StrictHostKeyChecking=no services.yml node-app-pod.yml ubuntu@${devIp}:/home/ubuntu/app-node/"
-                    sh "ssh ubuntu@${devIp} cd app-node/"
+                    sh "ssh ubuntu@${devIp} cd /home/ubuntu/app-node/"
                     script{
                         try {
                             sh "ssh ubuntu@${devIp} kubectl apply -f ."
