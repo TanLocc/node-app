@@ -49,8 +49,9 @@ spec:
                 sh "./changeTag.sh ${dockerTag}"
               
                sshagent(['server-keypair']) {
-                 
-                    sh "scp -o StrictHostKeyChecking=no services.yml node-app-pod.yml ubuntu@${devIp}:/home/ubuntu/"
+                    sh "mkdir app-node"
+                    sh "scp -o StrictHostKeyChecking=no services.yml node-app-pod.yml ubuntu@${devIp}:/home/ubuntu/app-node/"
+                    sh "cd /app-node"
                     script{
                         try {
                             sh "ssh ubuntu@${devIp} kubectl apply -f ."
