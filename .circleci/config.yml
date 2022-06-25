@@ -31,7 +31,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: ["03:18:5e"] # You can get this ID in the section where you registered the SSH Key
+          fingerprints: ["d1:54:87:c9:00:e9:4e:c8:04:4b:6c:33:66:11:25:fa"] # You can get this ID in the section where you registered the SSH Key
       - run:
           name: Install dependencies
           command: |
