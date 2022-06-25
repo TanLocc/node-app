@@ -27,7 +27,7 @@ jobs:
                 --region us-east-1
   configure_infrastructure: 
     docker:
-      - image: cimg/node:15.1
+      - image: cimg/python:3.10.5
     steps:
       - checkout
       - add_ssh_keys:
