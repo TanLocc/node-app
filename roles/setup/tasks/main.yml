@@ -1,18 +1,18 @@
 ---
 - name: "update yum packages."
   become: true
-  yum:
+  apt:
     update_cache: true
 
 - name: "upgrade packages"
   become: true
-  yum:
+  apt:
     name: "*"
     state: latest
 
 - name: "install node dependencies"
   become: true
-  yum:
+  apt:
     name:
       - nodejs
       #- npm # TODO: additional steps required before installing this
